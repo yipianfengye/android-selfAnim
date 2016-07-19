@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_second"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="uuch.com.android_selfanim.SecondActivity">
+
+
+    <ImageView
+        android:id="@+id/image_source"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/aaa"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        />
+
+    <ImageView
+        android:id="@+id/image_temp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/image_source"
+        android:layout_centerHorizontal="true"
+        />
+
+    <uuch.com.android_selfanim.SelfDrawView
+        android:id="@+id/image_direction"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/image_temp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始执行"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/image_direction"
+        android:layout_marginTop="20dp"
+        />
+
+</RelativeLayout>
+</ScrollView>
