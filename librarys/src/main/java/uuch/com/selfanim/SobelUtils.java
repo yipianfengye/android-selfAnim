@@ -17,7 +17,7 @@ public class SobelUtils {
      */
     public static Bitmap Sobel(Bitmap bitmap) {
 
-        bitmap = CommenUtils.compress(bitmap, 480, 800);
+        // bitmap = CommenUtils.compress(bitmap, 480, 800);
         Bitmap temp = CommenUtils.toGrayscale(bitmap);
         int w = temp.getWidth();
         int h = temp.getHeight();

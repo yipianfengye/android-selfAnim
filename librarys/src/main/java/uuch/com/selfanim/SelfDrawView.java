@@ -30,25 +30,27 @@ public class SelfDrawView extends SurfaceView implements SurfaceHolder.Callback 
 
     private Bitmap mPaintBm;
     private Point mLastPoint = new Point(0, 0);
-
-    public SelfDrawView(Context context) {
-        super(context);
-        init();
-    }
+    private Point mLPoint = new Point(0, 0);
 
     public SelfDrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        initView();
     }
 
-    private void init() {
+    /**
+     * 执行组件的初始化方法
+     */
+    private void initView() {
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
         mPaint = new Paint();
         mPaint.setColor(Color.BLACK);
     }
 
-    //设置画笔图片
+    /**
+     * 设置画笔图片
+     * @param paintBm
+     */
     public void setPaintBm(Bitmap paintBm) {
         mPaintBm = paintBm;
     }
@@ -84,31 +86,23 @@ public class SelfDrawView extends SurfaceView implements SurfaceHolder.Callback 
 
     /**
      * 开始执行绘制操作
-     * @param mBitmap
+     * @param array
+     * @param width
+     * @param height
      */
-    public void beginDrawSketch(Bitmap mBitmap) {
-        /**
-         * 返回的是处理过的Bitmap
-         */
-        Bitmap sobelBm = SobelUtils.Sobel(mBitmap);
-        /**
-         * 返回boolean 二维数组
-         */
-        boolean[][] array = getIsNeedFlush(sobelBm);
+    public void beginDrawSketch(boolean[][] array, int width, int height) {
         /**
          * 若当前正在绘制,不再执行
          */
         if (isDrawing) {
             return;
         }
-
         /**
          * 初始化数据
          */
         this.mArray = array;
         mSrcBmWidth = array.length;
         mSrcBmHeight = array[0].length;
-
         /**
          * 在子线程中执行组件的绘制操作
          */
@@ -126,6 +120,7 @@ public class SelfDrawView extends SurfaceView implements SurfaceHolder.Callback 
                     }
                 }
                 isDrawing = false;
+
             }
         }.start();
     }
@@ -146,6 +141,7 @@ public class SelfDrawView extends SurfaceView implements SurfaceHolder.Callback 
         while (count-- > 0) {
             p = getNextPoint();
             if (p == null) {//如果p为空，说明所有的点已经绘制完成
+                clearPaint();
                 return false;
             }
             mTmpCanvas.drawPoint(p.x, p.y, mPaint);
@@ -159,12 +155,29 @@ public class SelfDrawView extends SurfaceView implements SurfaceHolder.Callback 
         return true;
     }
 
+    /**
+     * 清除画笔
+     */
+    private void clearPaint() {
+        if (mLPoint != null) {
+            mTmpBm = Bitmap.createBitmap(mPaintBm.getWidth(), mPaintBm.getHeight(), Bitmap.Config.ARGB_8888);
+            mTmpCanvas = new Canvas(mTmpBm);
+            mPaint.setColor(Color.TRANSPARENT);
+            mPaint.setStyle(Paint.Style.FILL);
+            mTmpCanvas.drawRect(0, 0, mWidth, mHeight, mPaint);
+            Canvas canvas = mSurfaceHolder.lockCanvas();
+            canvas.drawBitmap(mTmpBm, mLPoint.x, mLPoint.y - mTmpBm.getHeight(), mPaint);
+            mSurfaceHolder.unlockCanvasAndPost(canvas);
+        }
+    }
+
 
     /**
      * 获取下一个需要绘制的点
      * @return
      */
     private Point getNextPoint() {
+        mLPoint = mLastPoint;
         mLastPoint = getNearestPoint(mLastPoint);
         return mLastPoint;
     }
@@ -216,7 +229,7 @@ public class SelfDrawView extends SurfaceView implements SurfaceHolder.Callback 
      * @param bitmap
      * @return
      */
-    private boolean[][] getIsNeedFlush(Bitmap bitmap) {
+    public static boolean[][] getIsNeedFlush(Bitmap bitmap) {
         boolean[][] b = new boolean[bitmap.getWidth()][bitmap.getHeight()];
 
         for (int i = 0; i < bitmap.getWidth(); i++) {

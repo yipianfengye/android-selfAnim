@@ -8,8 +8,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import uuch.com.selfanim.CommenUtils;
+import uuch.com.selfanim.DrawUtils;
 import uuch.com.selfanim.SelfDrawView;
 
+/**
+ * 绘制操作工具类
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ImageView imageSource = null;
@@ -19,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_main);
 
         initView();
 
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                  * 开始执行绘制素描的操作
                  */
                 imageDirsction.setPaintBm(paintBm);
-                imageDirsction.beginDrawSketch(bitmapSource);
+                DrawUtils.startSelfDraw(imageDirsction, bitmapSource);
             }
         });
 
