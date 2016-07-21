@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="uuch.com.android_selfanim.SecondActivity">
+        tools:context="uuch.com.android_selfanim.MainActivity">
 
 
         <ImageView

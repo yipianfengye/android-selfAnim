@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import uuch.com.selfanim.CommenUtils;
 import uuch.com.selfanim.SelfDrawView;
 
-public class SecondActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private ImageView imageSource = null;
     private SelfDrawView imageDirsction = null;
@@ -42,7 +42,7 @@ public class SecondActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap paintBm = CommenUtils.getRatioBitmap(SecondActivity.this, R.drawable.paint, 10, 20);
+                Bitmap paintBm = CommenUtils.getRatioBitmap(MainActivity.this, R.drawable.paint, 10, 20);
 
                 imageSource.buildDrawingCache();
                 Bitmap bitmapSource = imageSource.getDrawingCache();
