@@ -28,7 +28,7 @@ public class SelfDrawView extends SurfaceView implements SurfaceHolder.Callback 
     private int mSrcBmHeight;
     private boolean[][] mArray;
 
-    private Bitmap mPaintBm;
+    private Bitmap mPaintBm = null;
     private Point mLastPoint = new Point(0, 0);
     private Point mLPoint = new Point(0, 0);
 
@@ -45,6 +45,7 @@ public class SelfDrawView extends SurfaceView implements SurfaceHolder.Callback 
         mSurfaceHolder.addCallback(this);
         mPaint = new Paint();
         mPaint.setColor(Color.BLACK);
+        mPaintBm = CommenUtils.getRatioBitmap(this.getContext(), R.drawable.paint, 10, 20);
     }
 
     /**
@@ -77,6 +78,7 @@ public class SelfDrawView extends SurfaceView implements SurfaceHolder.Callback 
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        clearPaint();
     }
 
 

@@ -50,4 +50,17 @@ public class DrawUtils {
         Drawable drawable = new BitmapDrawable(mBitmap);
         view.setBackgroundDrawable(drawable);
     }
+
+    /**
+     * 更新画笔
+     * @param selfDrawView
+     * @param mBitmap
+     */
+    public static void updatePaintBitmap(SelfDrawView selfDrawView, Bitmap mBitmap) {
+        if (selfDrawView == null || mBitmap == null) {
+            return;
+        }
+
+        selfDrawView.setPaintBm(mBitmap);
+    }
 }
