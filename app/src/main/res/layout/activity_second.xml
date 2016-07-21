@@ -21,7 +21,7 @@
             android:layout_marginTop="20dp"
             />
 
-        <uuch.com.android_selfanim.SelfDrawView
+        <uuch.com.selfanim.SelfDrawView
             android:id="@+id/image_direction"
             android:layout_width="200dp"
             android:layout_height="200dp"

@@ -1,4 +1,4 @@
-package uuch.com.android_selfanim;
+package uuch.com.selfanim;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
