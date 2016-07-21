@@ -12,7 +12,6 @@ import android.widget.ImageView;
 public class SecondActivity extends AppCompatActivity {
 
     private ImageView imageSource = null;
-    private ImageView imageTemp = null;
     private SelfDrawView imageDirsction = null;
     private Button button1 = null;
 
@@ -31,7 +30,6 @@ public class SecondActivity extends AppCompatActivity {
      */
     private void initView() {
         imageSource = (ImageView) findViewById(R.id.image_source);
-        imageTemp = (ImageView) findViewById(R.id.image_temp);
         imageDirsction = (SelfDrawView) findViewById(R.id.image_direction);
         button1 = (Button) findViewById(R.id.button1);
     }
@@ -44,31 +42,16 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bitmap paintBm = CommenUtils.getRatioBitmap(SecondActivity.this, R.drawable.paint, 10, 20);
-                imageDirsction.setPaintBm(paintBm);
 
                 imageSource.buildDrawingCache();
                 Bitmap bitmapSource = imageSource.getDrawingCache();
-                //返回的是处理过的Bitmap
-                Bitmap sobelBm = SobelUtils.Sobel(bitmapSource);
-                imageTemp.setImageBitmap(sobelBm);
-
-                imageDirsction.beginDraw(getIsNeedFlush(sobelBm));
+                /**
+                 * 开始执行绘制素描的操作
+                 */
+                imageDirsction.setPaintBm(paintBm);
+                imageDirsction.beginDrawSketch(bitmapSource);
             }
         });
 
     }
-
-    private boolean[][] getIsNeedFlush(Bitmap bitmap) {
-        boolean[][] b = new boolean[bitmap.getWidth()][bitmap.getHeight()];
-
-        for (int i = 0; i < bitmap.getWidth(); i++) {
-            for (int j = 0; j < bitmap.getHeight(); j++) {
-                if (bitmap.getPixel(i, j) != Color.WHITE)
-                    b[i][j] = true;
-                else
-                    b[i][j] = false;
-            }
-        }
-        return b;
-    };
 }
